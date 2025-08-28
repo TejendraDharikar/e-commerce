@@ -1,6 +1,11 @@
-import PropTypes from "prop-types";
+import React from "react";
+import type { ReactNode } from "react";
 
-const Modal = ({ children }) => {
+interface ModalProps {
+  children: ReactNode;
+}
+
+const Modal: React.FC<ModalProps> = ({ children }) => {
   return (
     <div className="bg-green-500 relative z-50">
       <div className="fixed bg-black/50 inset-0">
@@ -13,9 +18,5 @@ const Modal = ({ children }) => {
     </div>
   );
 };
-
- Modal.propTypes = {
-   children: PropTypes.any.isRequired,
- };
 
 export default Modal;

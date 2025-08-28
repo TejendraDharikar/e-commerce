@@ -1,9 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import Deleteproduct from "../buttons/Deleteproduct";
-import Updateproduct from "../buttons/Updateproduct";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deletePost, updateProduct, type Product } from "./apidata";
+import  { useState } from "react";
+import ProductForm from "../buttons/ProductForm";
 
 const Cards = () => {
+const queryClient=useQueryClient();
+const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+
+
   const {data, isLoading, isError}= useQuery({
+     queryKey:["getproducts"],
     queryFn:async ()=>{
       try {
         const dataFetch=await fetch("https://fakestoreapi.com/products");
@@ -16,9 +22,52 @@ const Cards = () => {
       } catch (error) {
       console.log(error);
       }
-    },
-    queryKey:["getproducts"]
-  })
+    }
+   
+  });
+
+
+
+
+// deleting with mutation
+const deleteMutation=useMutation({
+  mutationFn:(id:number)=>deletePost(id),
+onSuccess:(data,id)=>{
+console.log("deleted data is ",data,id);
+
+
+  // updates cache
+  queryClient.setQueryData(["getproducts"], (oldData: any) => {
+    return oldData.filter((item: any) => item.id !== id);
+  });
+}
+});
+
+
+
+
+
+
+
+// updating with mutation
+const updateMutation=useMutation({
+  mutationFn:(updatedProduct:Product)=>updateProduct(updatedProduct),
+onSuccess:(updatedProduct)=>{
+
+  // updates cache
+  queryClient.setQueryData<Product[]>(["getproducts"], (oldData) =>oldData ? oldData.map((item)=>
+    item.id===updatedProduct.id ? updatedProduct : item
+  ) : [updatedProduct]
+  );
+}
+});
+
+
+
+
+
+
+
   if(isLoading){
      return (
       <div className="flex justify-center items-center h-[100vh]">
@@ -26,6 +75,9 @@ const Cards = () => {
       </div>
     );
   }
+
+
+
   if(isError){
     console.log("Error while fetching data")
   return (
@@ -37,10 +89,26 @@ const Cards = () => {
     <div>Data</div>
   )
 }
-console.log("data is ",data,isLoading,isError)
+
+
+
 
 
 return(
+<div>
+
+
+ {editingProduct ? (
+        <ProductForm
+          initialProduct={editingProduct}
+          onSubmit={async(product: Product) =>await updateMutation.mutate(product)}
+          onCancel={() => setEditingProduct(null)}
+        />
+      ) : (
+
+
+
+
   <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 p-6">
     {data.map((item:any)=>(
       <div 
@@ -58,12 +126,34 @@ return(
 
 
         <div className="grid grid-cols-2 gap-3 mt-7">
-          <Updateproduct/>
-<Deleteproduct/>
+        
+
+
+
+      {/* update ko lai button */}
+<button 
+className="border-2 hover:bg-blue-500 w-full"
+onClick={()=>setEditingProduct(item)}
+>UPDATE</button>
+          
+
+
+
+
+
+          {/* detlete ko lai */}
+<button className="border-2 hover:bg-blue-500 w-full"
+
+onClick={()=>deleteMutation.mutate(item.id)}
+>REMOVE</button>
+
+
         </div>
 
         </div>
     ))}
+  </div>
+      )}
   </div>
 );
 };

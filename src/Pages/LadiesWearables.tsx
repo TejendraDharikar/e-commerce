@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { apidata } from "../components/apidata";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -18,8 +19,9 @@ const LadiesWearables = () => {
             ladiesProduct?.map(item=>
               (
                 <div key={item.id}
-                className="hover:shadow-blue-500 rounded-md shadow-md hover:bg-black hover:text-white transition cursor-pointer p-4"
+                className=" text-blue-900 bg-gray-50 hover:shadow-blue-500 rounded-md shadow-md hover:bg-black hover:text-white transition cursor-pointer p-4"
                 >
+                  <NavLink to={`/Ladieswears/${item.id}`}>
                       <img src={item.image} alt={item.title}
                       className="h-32 mx-auto mb-2 mt-1"
                       />
@@ -27,6 +29,7 @@ const LadiesWearables = () => {
                       <h1 className="font-semibold text-lg mb-2
                       ">{item.title}</h1>
                       <p className=" text-sm mb-2">{item.description}</p>
+               </NavLink>
                 </div>
             ))
           }

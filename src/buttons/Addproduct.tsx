@@ -2,10 +2,10 @@ import { useState } from "react"
 import { IoMdCloseCircle } from "react-icons/io";
 import Cards from "../components/Cards";
 import Modal from "./modal";
-import { Form } from "react-router-dom";
+import ProductForm from "./ProductForm";
 
-const Addproduct = () => {
-  const[openModal,setOpenModel]=useState(false);
+const Addproduct:React.FC = () => {
+  const[openModal,setOpenModel]=useState<boolean>(false);
 
   return (
     <div>
@@ -18,13 +18,15 @@ const Addproduct = () => {
                 className="text-red-500 text-xl cursor-pointer"
               />
             </div>
-<Form/>
+<ProductForm/>
           
           </div>
         </Modal>
       ) : null}
   <div className="mx-auto">
-       <button className="border-2 rounded-md hover:bg-blue-500 hover:text-white w-50 mt-4  text-center " >Add product</button>
+       <button
+       onClick={()=>setOpenModel(true)}
+        className="border-2 rounded-md hover:bg-blue-500 hover:text-white w-50 mt-4  text-center " >Add product</button>
     </div>
     <Cards/>
     </div>

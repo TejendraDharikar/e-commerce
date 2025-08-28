@@ -18,3 +18,35 @@ export const apidata=()=>
       return res.json();
     }
   })
+
+
+
+export const FetchSingleProduct = async (id: number): Promise<Product> => {
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+  if (!res.ok) throw new Error("failed to fetch single product");
+  return res.json();
+};
+
+
+
+
+
+
+
+
+export const deletePost = async (id: number) => {
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("failed to delete product");
+  return res.json();
+};
+
+export const updateProduct=async(product:Product)=>{
+  const res=await fetch(`https://fakestoreapi.com/products/${product.id}`,{
+    method:"PUT",
+    body:JSON.stringify({product})
+  });
+  if(!res.ok) throw new Error("failed to update product");
+  return res.json();
+}

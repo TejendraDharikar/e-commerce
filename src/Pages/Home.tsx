@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const {data, isLoading, isError}= useQuery({
@@ -47,8 +48,8 @@ console.log("data is ",data,isLoading,isError)
     {data.map((item:any)=>(
       <div 
       key={item.id}
-      className=" p-4 shadow-md rounded-md hover:shadow-blue-500 cursor-pointer hover:bg-black hover:text-white transition duration-300">
-
+      className=" p-4 text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500 cursor-pointer hover:bg-black hover:text-white transition duration-300">
+<NavLink to={`/${item.id}`}>
 <img src={item.image} alt="products" className=" h-32 mx-auto mb-4"/>
         
         <div className="mt-2 text-center font-bold text-lg">${item.price}</div>
@@ -62,7 +63,7 @@ console.log("data is ",data,isLoading,isError)
         <div className="grid grid-cols-2 gap-3 mt-7">
         
         </div>
-
+</NavLink>
         </div>
     ))}
   </div>

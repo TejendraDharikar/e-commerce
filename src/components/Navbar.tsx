@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom"
-import SearchBar from "./SearchBar"
 
 const Navbar = () => {
   return (
@@ -8,7 +7,7 @@ const Navbar = () => {
   <div  className="text-center pl-5 pb-2 ">
   <NavLink
     to="/"
-  className="text-4xl font-bold  text-white">TD-CART</NavLink>
+  className="text-4xl mx-auto font-bold  text-white">TD-CART</NavLink>
   </div>
 
 
@@ -16,34 +15,33 @@ const Navbar = () => {
  <NavLink 
   to="/"
   className={({isActive})=>
-    isActive?"text-blue-500 p-4":"text-white p-4"}
+    isActive?"text-black p-4 bg-gray-100 pt-1 pb-1  rounded-2xl":"text-white p-4"}
   >Home</NavLink>
 
  <NavLink 
   to="/Ladieswears"
    className={({isActive})=>
-    isActive?"text-blue-500 p-4":"text-white p-4"}
+    isActive?"text-black p-4 bg-gray-100 pt-1 pb-1 rounded-2xl":"text-white p-4"}
   >Ladies-Wearables</NavLink>
 
 <NavLink 
   to="/wearables"
    className={({isActive})=>
-    isActive?"text-blue-500 p-4":"text-white p-4"}
+    isActive?"text-black p-4 bg-gray-100 pt-1 pb-1 rounded-2xl":"text-white p-4"}
   >Men-Wearables</NavLink>
 
   <NavLink 
   to="/electronics"
    className={({isActive})=>
-    isActive?"text-blue-500 p-4":"text-white p-4"}
+    isActive?"text-black p-4 bg-gray-100 pt-1 pb-1 rounded-2xl":"text-white p-4 "}
   >Electronics</NavLink>
 
   <NavLink 
   to="/edit"
    className={({isActive})=>
-    isActive?"text-blue-500 p-4":"text-white p-4"}
+    isActive?"text-black p-4 bg-gray-100 pt-1 pb-1 rounded-2xl":"text-white p-4"}
   >Edit</NavLink>
 </div>
-<SearchBar/>
 </nav>
   )
 }

@@ -12,6 +12,9 @@ export interface Product{
 export const apidata=()=>
   useQuery<Product[]>({
     queryKey:["getproducts"],
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  gcTime: 1000 * 60 * 10,   // 10 minutes
+
      queryFn:async ()=>{
       const res=await fetch ("https://fakestoreapi.com/products")
       if(!res.ok) throw new Error("failed to fetch");

@@ -48,7 +48,7 @@ console.log("data is ",data,isLoading,isError)
     {data.map((item:any)=>(
       <div 
       key={item.id}
-      className=" p-4 text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500 cursor-pointer hover:bg-black hover:text-white transition duration-300">
+      className=" p-4 text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500 cursor-pointer hover:bg-gray-700 hover:text-white transition duration-300">
 <NavLink to={`/${item.id}`}>
 <img src={item.image} alt="products" className=" h-32 mx-auto mb-4"/>
         

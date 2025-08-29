@@ -17,7 +17,7 @@ const Electronics = () => {
         {electronics?.map(item => (
           <div
             key={item.id}
-            className="p-4 text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500 hover:bg-black hover:text-white transition curser-pointer"
+            className="p-4 text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500 hover:bg-gray-700 hover:text-white transition curser-pointer"
           >
 
 

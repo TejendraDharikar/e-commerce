@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 export interface Product{
-   id: number;
+   id?: number;
   title: string;
   description: string;
   image: string;
@@ -33,6 +33,30 @@ export const FetchSingleProduct = async (id: number): Promise<Product> => {
 
 
 
+export const addProduct = async (product: Product) => {
+  const response = await fetch("https://fakestoreapi.com/products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  
+
+  // u can use alert in replacement of return below
+  return response.json();
+};
+
+
+
+
+
+
+
 
 export const deletePost = async (id: number) => {
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
@@ -42,11 +66,18 @@ export const deletePost = async (id: number) => {
   return res.json();
 };
 
+
+
+
+
 export const updateProduct=async(product:Product)=>{
   const res=await fetch(`https://fakestoreapi.com/products/${product.id}`,{
     method:"PUT",
-    body:JSON.stringify({product})
+    headers: {
+  "Content-Type": "application/json"
+},
+ body:JSON.stringify(product)
   });
   if(!res.ok) throw new Error("failed to update product");
   return res.json();
-}
+};

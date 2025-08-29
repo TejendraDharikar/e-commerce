@@ -3,11 +3,10 @@ import { NavLink } from "react-router-dom"
 const Navbar = () => {
   return (
     
-<nav className=" bg-black p-3 rounded-md flex justify-between">
-  <div  className="text-center pl-5 pb-2 ">
-  <NavLink
-    to="/"
-  className="text-4xl mx-auto font-bold  text-white">TD-CART</NavLink>
+<nav className=" bg-black p-3  rounded-md flex justify-between">
+  <div  className="pl-3 my-auto pb-2 italic text-2xl font-bold  text-yellow-500 ">
+    
+  <NavLink to="/">TD-CART</NavLink>
   </div>
 
 
@@ -22,13 +21,13 @@ const Navbar = () => {
   to="/Ladieswears"
    className={({isActive})=>
     isActive?"text-black p-4 bg-gray-100 pt-1 pb-1 rounded-2xl":"text-white p-4"}
-  >Ladies-Wearables</NavLink>
+  >LadiesWear</NavLink>
 
 <NavLink 
   to="/wearables"
    className={({isActive})=>
     isActive?"text-black p-4 bg-gray-100 pt-1 pb-1 rounded-2xl":"text-white p-4"}
-  >Men-Wearables</NavLink>
+  >Menswear</NavLink>
 
   <NavLink 
   to="/electronics"

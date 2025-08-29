@@ -3,6 +3,7 @@ import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
+import { addProduct, updateProduct, type Product } from "../components/apidata";
 
 // Define the schema using Zod
 const addProductFormSchema = z.object({
@@ -22,17 +23,9 @@ const addProductFormSchema = z.object({
 });
 
 // Define a type for the product
-type Product = {
-  id?: number;
-  title: string;
-  price: number;
-  description: string;
-  image: string;
-  category: string;
-};
 
 
-type ProductFormProps = {
+export type ProductFormProps = {
   initialProduct?: Product; 
   onSubmit: (product: Product) => Promise<void> | void;
   isPending: boolean;
@@ -40,52 +33,36 @@ type ProductFormProps = {
 
 
 
-// Function to add product
-const addProduct = async (product: Product) => {
-  const response = await fetch("https://fakestoreapi.com/products", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  
-
-  // u can use alert in replacement of return below
-  return response.json();
-};
-
-
-
-
-
-
-
-
-
 
 
 const ProductForm = ({ initialProduct, onSubmit}: ProductFormProps) => {
 const client = useQueryClient();
+
+  const isEditMode = !!initialProduct;
+
   const mutation = useMutation({
-    mutationFn: addProduct,
+    mutationFn: isEditMode ? updateProduct : addProduct,
     onSuccess: (data) => {
-      console.log("Product added successfully:", data);
-      alert("Product added successfully");
-     client.setQueryData(["getproducts"], (oldData: Product[] | undefined) => {
-    return oldData ? [ data,...oldData] : [data];
+      if (isEditMode) {
+        client.setQueryData<Product[]>(["getproducts"], (oldProducts) =>
+          oldProducts
+            ? oldProducts.map((p) => (p.id === data.id ? data : p))
+            : []
+        );
+      } else {
+        client.setQueryData<Product[]>(["getproducts"], (oldData) =>
+          oldData ? [data, ...oldData] : [data]
+        );
+      }
+
+      alert(`${isEditMode ? "Product updated" : "Product added"} successfully`);
+      onSubmit?.(data);
+    },
+    onError: () => {
+      alert(`Failed to ${isEditMode ? "update" : "add"} product`);
+    },
   });
 
-    },
-    onError: (error) => {
-      console.error("Error adding product:", error);
-      alert("Failed to add product");
-    },
-  });
 
   return (
     <Formik
@@ -96,14 +73,17 @@ const client = useQueryClient();
         image:initialProduct?.image || "",
         category: initialProduct?.category ||"",
       }}
-      onSubmit={async (values, { resetForm }) => {
+      onSubmit={async (values, { resetForm }) => {await onSubmit(
         await mutation.mutateAsync({
+           ...(initialProduct?.id ? { id: initialProduct.id } : {}),
+
           title: values.title,
           price: Number(values.price),
           description: values.description,
           image: values.image,
           category: values.category,
-        });
+        })
+      )
         resetForm();
       }}
       validationSchema={toFormikValidationSchema(addProductFormSchema)}

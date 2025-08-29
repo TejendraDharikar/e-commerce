@@ -17,7 +17,7 @@ const MenWearables = () => {
        {mensWear?.map(item=>(
         <div key={item.id} 
         className="text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500
-        hover:bg-black hover:text-white
+        hover:bg-gray-700 hover:text-white
         transition cursor-pointer p-4">
 
 

@@ -19,7 +19,7 @@ const LadiesWearables = () => {
             ladiesProduct?.map(item=>
               (
                 <div key={item.id}
-                className=" text-blue-900 bg-gray-50 hover:shadow-blue-500 rounded-md shadow-md hover:bg-black hover:text-white transition cursor-pointer p-4"
+                className=" text-blue-900 bg-gray-50 hover:shadow-blue-500 rounded-md shadow-md hover:bg-gray-700 hover:text-white transition cursor-pointer p-4"
                 >
                   <NavLink to={`/Ladieswears/${item.id}`}>
                       <img src={item.image} alt={item.title}

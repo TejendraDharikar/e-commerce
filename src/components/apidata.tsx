@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-export interface Product{
-   id?: number;
+export interface Product {
+  id?: number;
   title: string;
   description: string;
   image: string;
@@ -9,32 +9,24 @@ export interface Product{
   price: number;
 }
 
-export const apidata=()=>
+export const apidata = () =>
   useQuery<Product[]>({
-    queryKey:["getproducts"],
+    queryKey: ["getproducts"],
     staleTime: 1000 * 60 * 5, // 5 minutes
-  gcTime: 1000 * 60 * 10,   // 10 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
 
-     queryFn:async ()=>{
-      const res=await fetch ("https://fakestoreapi.com/products")
-      if(!res.ok) throw new Error("failed to fetch");
+    queryFn: async () => {
+      const res = await fetch("https://fakestoreapi.com/products");
+      if (!res.ok) throw new Error("failed to fetch");
       return res.json();
-    }
-  })
-
-
+    },
+  });
 
 export const FetchSingleProduct = async (id: number): Promise<Product> => {
   const res = await fetch(`https://fakestoreapi.com/products/${id}`);
   if (!res.ok) throw new Error("failed to fetch single product");
   return res.json();
 };
-
-
-
-
-
-
 
 export const addProduct = async (product: Product) => {
   const response = await fetch("https://fakestoreapi.com/products", {
@@ -48,18 +40,10 @@ export const addProduct = async (product: Product) => {
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  
 
   // u can use alert in replacement of return below
   return response.json();
 };
-
-
-
-
-
-
-
 
 export const deletePost = async (id: number) => {
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
@@ -69,18 +53,14 @@ export const deletePost = async (id: number) => {
   return res.json();
 };
 
-
-
-
-
-export const updateProduct=async(product:Product)=>{
-  const res=await fetch(`https://fakestoreapi.com/products/${product.id}`,{
-    method:"PUT",
+export const updateProduct = async (product: Product) => {
+  const res = await fetch(`https://fakestoreapi.com/products/${product.id}`, {
+    method: "PUT",
     headers: {
-  "Content-Type": "application/json"
-},
- body:JSON.stringify(product)
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
   });
-  if(!res.ok) throw new Error("failed to update product");
+  if (!res.ok) throw new Error("failed to update product");
   return res.json();
 };

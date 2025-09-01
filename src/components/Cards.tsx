@@ -1,63 +1,45 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apidata, deletePost, type Product } from "./apidata";
-import  { useState } from "react";
+import { useState } from "react";
 import UpdateProduct from "../buttons/UpdateProduct";
 
-
 const Cards = () => {
-const Client=useQueryClient();
-const {data, isLoading, isError}= apidata();
+  const Client = useQueryClient();
+  const { data, isLoading, isError } = apidata();
 
+  const [isUpdateModelOpen, setIsUpdateModelOpen] = useState<boolean>(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
-const [isUpdateModelOpen, setIsUpdateModelOpen] = useState<boolean>(false);
-const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  // deleting with mutation
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deletePost(id),
+    onSuccess: (data, id) => {
+      console.log("deleted data is ", data, id);
 
+      // updates cache
+      Client.setQueryData(["getproducts"], (oldData: any) => {
+        return oldData.filter((item: any) => item.id !== id);
+      });
+    },
+  });
 
-
-
-
-if(isLoading){
-     return (
+  if (isLoading) {
+    return (
       <div className="flex justify-center items-center h-[100vh]">
         Loading...
       </div>
     );
   }
-  if(isError){
-    console.log("Error while fetching data")
+  if (isError) {
+    console.log("Error while fetching data");
+    return <div>Error fetching data</div>;
+  }
+  if (!data) {
+    console.log("Data is undefined or null");
+    return <div>Data</div>;
+  }
+
   return (
-    <div>Error fetching data</div>
-  )}
-  if(!data){
-    console.log("Data is undefined or null")
-  return(
-    <div>Data</div>
-  )
-}
-
-
-
-
-
-
-// deleting with mutation
-const deleteMutation=useMutation({
-  mutationFn:(id:number)=>deletePost(id),
-onSuccess:(data,id)=>{
-console.log("deleted data is ",data,id);
-
-
-  // updates cache
-  Client.setQueryData(["getproducts"], (oldData: any) => {
-    return oldData.filter((item: any) => item.id !== id);
-  });
-}
-});
-
-
-
-
-return (
     <div>
       {isUpdateModelOpen && editingProduct && (
         <UpdateProduct
@@ -70,10 +52,19 @@ return (
       )}
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 p-6">
-        {data?.map(product => (
-          <div key={product.id} className="p-4 shadow-md rounded-md bg-blue-200 hover:shadow-blue-500 transition duration-300">
-            <img src={product.image} alt={product.title} className="h-32 mx-auto mb-4" />
-            <div className="mt-2 text-center font-bold text-lg">${product.price}</div>
+        {data?.map((product) => (
+          <div
+            key={product.id}
+            className="p-4 shadow-md rounded-md bg-blue-200 hover:shadow-blue-500 transition duration-300"
+          >
+            <img
+              src={product.image}
+              alt={product.title}
+              className="h-32 mx-auto mb-4"
+            />
+            <div className="mt-2 text-center font-bold text-lg">
+              ${product.price}
+            </div>
             <h1 className="text-lg font-semibold mt-2">{product.title}</h1>
             <div className="text-sm mt-2">{product.description}</div>
 
@@ -101,6 +92,5 @@ return (
     </div>
   );
 };
-
 
 export default Cards;

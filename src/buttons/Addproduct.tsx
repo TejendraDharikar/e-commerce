@@ -1,13 +1,12 @@
-import { useState } from "react"
+import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import Modal from "./modal";
 import ProductForm from "./ProductForm";
 import Cards from "../components/Cards";
 
-const Addproduct:React.FC = () => {
-  const[openModal,setOpenModel]=useState<boolean>(false);
+const Addproduct: React.FC = () => {
+  const [openModal, setOpenModel] = useState<boolean>(false);
 
-  
   return (
     <div>
       {openModal ? (
@@ -19,23 +18,21 @@ const Addproduct:React.FC = () => {
                 className="text-red-500 text-xl cursor-pointer"
               />
             </div>
-<ProductForm 
-  onSubmit={() => { }} 
-  isPending={false} 
-/>
-          
+            <ProductForm onSubmit={() => {}} isPending={false} />
           </div>
         </Modal>
       ) : null}
-  <div className="mx-auto">
-       <button
-       onClick={()=>setOpenModel(true)}
-        className="border-2 rounded-md hover:bg-blue-500 hover:text-white w-50 mt-4  text-center hover:border-blue-500" >Add product</button>
+      <div className="mx-auto">
+        <button
+          onClick={() => setOpenModel(true)}
+          className="border-2 rounded-md hover:bg-blue-500 hover:text-white w-50 mt-4  text-center hover:border-blue-500"
+        >
+          Add product
+        </button>
+      </div>
+      <Cards />
     </div>
-  <Cards/>
-    </div>
-  
-  )
-}
+  );
+};
 
-export default Addproduct
+export default Addproduct;

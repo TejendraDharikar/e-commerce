@@ -24,19 +24,14 @@ const addProductFormSchema = z.object({
 
 // Define a type for the product
 
-
 export type ProductFormProps = {
-  initialProduct?: Product; 
+  initialProduct?: Product;
   onSubmit: (product: Product) => Promise<void> | void;
   isPending: boolean;
 };
 
-
-
-
-
-const ProductForm = ({ initialProduct, onSubmit}: ProductFormProps) => {
-const client = useQueryClient();
+const ProductForm = ({ initialProduct, onSubmit }: ProductFormProps) => {
+  const client = useQueryClient();
 
   const isEditMode = !!initialProduct;
 
@@ -63,27 +58,27 @@ const client = useQueryClient();
     },
   });
 
-
   return (
     <Formik
       initialValues={{
-        title: initialProduct ?.title || "",
-        price: initialProduct?String(initialProduct.price):"",
-        description:initialProduct?.description ||"",
-        image:initialProduct?.image || "",
-        category: initialProduct?.category ||"",
+        title: initialProduct?.title || "",
+        price: initialProduct ? String(initialProduct.price) : "",
+        description: initialProduct?.description || "",
+        image: initialProduct?.image || "",
+        category: initialProduct?.category || "",
       }}
-      onSubmit={async (values, { resetForm }) => {await onSubmit(
-        await mutation.mutateAsync({
-           ...(initialProduct?.id ? { id: initialProduct.id } : {}),
+      onSubmit={async (values, { resetForm }) => {
+        await onSubmit(
+          await mutation.mutateAsync({
+            ...(initialProduct?.id ? { id: initialProduct.id } : {}),
 
-          title: values.title,
-          price: Number(values.price),
-          description: values.description,
-          image: values.image,
-          category: values.category,
-        })
-      )
+            title: values.title,
+            price: Number(values.price),
+            description: values.description,
+            image: values.image,
+            category: values.category,
+          })
+        );
         resetForm();
       }}
       validationSchema={toFormikValidationSchema(addProductFormSchema)}
@@ -180,4 +175,4 @@ const client = useQueryClient();
   );
 };
 
-export default ProductForm
+export default ProductForm;

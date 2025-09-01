@@ -1,9 +1,6 @@
-
 const Footer = () => {
   return (
-       <div className="bg-black text-white mt-150 flex  justify-around">
-
-
+    <div className="bg-black text-white mt-150 flex  justify-around">
       <div>
         <h1 className="font-bold text-lg m-1 pl-4">Get to know us</h1>
         <ul className="pl-5 text-sm">
@@ -17,7 +14,6 @@ const Footer = () => {
         </ul>
       </div>
 
-
       <div>
         <h1 className="font-bold text-lg m-1 pl-4">Customer Care</h1>
         <ul className="pl-5 text-sm">
@@ -27,10 +23,8 @@ const Footer = () => {
           <li>Contact us</li>
         </ul>
       </div>
+    </div>
+  );
+};
 
-
-    </div> 
-  )
-}
-
-export default Footer
+export default Footer;

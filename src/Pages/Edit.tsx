@@ -1,16 +1,15 @@
-
-import Addproduct from "../buttons/Addproduct"
-import Footer from "../components/Footer"
-import Navbar from "../components/Navbar"
+import Addproduct from "../buttons/Addproduct";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const Edit = () => {
   return (
     <div>
-      <Navbar/>
-       <Addproduct/>
-      <Footer/>
+      <Navbar />
+      <Addproduct />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Edit
+export default Edit;

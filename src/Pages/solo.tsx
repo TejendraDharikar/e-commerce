@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { FetchSingleProduct } from "../components/apidata";
 import type { Product } from "../components/apidata";
 
 const Solo = () => {
   const { id } = useParams<{ id: string }>();
-
+  const navigate=useNavigate();
   const query = useQuery<Product, Error>({
     queryKey: ["getproduct", id],
     queryFn: () => FetchSingleProduct(Number(id)),
@@ -19,7 +19,18 @@ const Solo = () => {
   const data = query.data;
 
   return (
-    <div className=" h-150 w-150 xl:mx-auto p-4 shadow-md rounded-md shadow-blue-500 cursor-pointer  bg-blue-200 m-20 sm:mx-auto lg:mx-auto ">
+  <>
+<div className="absolute top-4 left-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Back
+        </button>
+      </div>
+
+
+  <div className=" h-150 w-150 xl:mx-auto p-4 shadow-md rounded-md shadow-blue-500 cursor-pointer  bg-blue-200 m-20 sm:mx-auto lg:mx-auto ">
       <img src={data.image} alt="products" className=" h-32 mx-auto mb-4" />
 
       <div className="mt-2 text-center font-bold text-lg">${data.price}</div>
@@ -30,6 +41,8 @@ const Solo = () => {
 
       <div className="text-sm mt-2 ">{data.description}</div>
     </div>
+  </>
+    
   );
 };
 export default Solo;

@@ -3,6 +3,7 @@ import { apidata, deletePost, type Product } from "./apidata";
 import { useState } from "react";
 import UpdateProduct from "../buttons/UpdateProduct";
 
+
 const Cards = () => {
   const Client = useQueryClient();
   const { data, isLoading, isError } = apidata();

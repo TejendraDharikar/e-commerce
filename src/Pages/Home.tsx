@@ -44,7 +44,7 @@ const Home = () => {
         {data.map((item: any) => (
           <div
             key={item.id}
-            className=" p-4 text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500 cursor-pointer hover:bg-gray-700 hover:text-white transition duration-300"
+            className=" p-4 text-blue-900 bg-gray-50 shadow-md rounded-md hover:shadow-blue-500 cursor-pointer hover:bg-gray-200  transition duration-300"
           >
             <NavLink to={`/${item.id}`}>
               <img
@@ -60,7 +60,28 @@ const Home = () => {
 
               <div className="text-sm mt-2 ">{item.description}</div>
 
-              <div className="grid grid-cols-2 gap-3 mt-7"></div>
+<div className="grid grid-cols-2 gap-3 mt-4">
+  <button
+    className="border-1  hover:text-white hover:border-blue-700  text-blue-600 py-2 rounded hover:bg-blue-700 transition duration-200"
+    onClick={(e) => {
+      e.preventDefault();
+      console.log("Added to cart:", item.title);
+      // You can trigger cart logic here
+    }}
+  >
+    Add to Cart
+  </button>
+  <button
+    className="border-1 border-green-600 text-green-600 py-2 rounded hover:bg-green-700 hover:text-white hover:border-green-700  transition duration-200"
+    onClick={(e) => {
+      e.preventDefault();
+      console.log("Buying:", item.title);
+      // You can trigger buy logic here
+    }}
+  >
+    Buy Now
+  </button>
+</div>
             </NavLink>
           </div>
         ))}
